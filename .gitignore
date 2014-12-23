@@ -1,0 +1,6 @@
+dist/
+.c9/
+.cabal-sandbox/
+*.o
+*.hi
+test/test_main
