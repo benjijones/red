@@ -4,7 +4,7 @@ import GHC.IO.Handle.FD (stdout)
 import GhcMonad
 import DynFlags
 import CoreSyn
-import Outputable (ppr, printForAsm)
+import Outputable (ppr, printForC)
 
 main :: IO ()
 main = runGhc (Just libdir) core
@@ -14,7 +14,7 @@ core = do
     dflags <- getSessionDynFlags
     setSessionDynFlags dflags
     coreModule <- compileToCoreModule "test/test_main.hs"
-    liftIO . printForAsm dflags stdout . ppr $ cm_safe coreModule
+    liftIO . printForC dflags stdout . ppr $ cm_binds coreModule
     
     
 --prettyPrint :: CoreModule -> String
