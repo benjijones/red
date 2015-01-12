@@ -1,21 +1,30 @@
-import GHC
+module Main where
+
+import GHC (runGhc, compileToCoreModule, CoreModule, setSessionDynFlags, getSessionDynFlags, cm_binds)
 import GHC.Paths (libdir)
-import GHC.IO.Handle.FD (stdout)
+
 import GhcMonad
 import DynFlags
 import CoreSyn
-import Outputable (ppr, printForC)
+
+import Red.Translate (translate)
+
+-- for printing
+--import GHC.IO.Handle.FD (stdout)
+--import Outputable (ppr, printForAsm)
 
 main :: IO ()
-main = runGhc (Just libdir) core
+main = do 
+    core <- runGhc (Just libdir) (coreModule "test/test_main.hs")
+    return $ translate $ cm_binds core
+    return ()
+--    liftIO . printForAsm dflags stdout . ppr $ cm_binds core
     
-core :: (GhcMonad m) => m ()      
-core = do
+-- |Sets up a session in the GhcMonad and
+-- compiles the given file to a CoreModule
+coreModule :: (GhcMonad m) => String -> m CoreModule 
+coreModule fileName = do
     dflags <- getSessionDynFlags
     setSessionDynFlags dflags
-    coreModule <- compileToCoreModule "test/test_main.hs"
-    liftIO . printForC dflags stdout . ppr $ cm_binds coreModule
-    
-    
---prettyPrint :: CoreModule -> String
---prettyPrint core = foldr f (cm_binds core)
+    compileToCoreModule fileName
+
