@@ -1,4 +1,4 @@
-module Red.Syntax1 where
+module Red.FliteSyntax where
 
 type Prog = [Decl]
 

@@ -22,7 +22,9 @@ type Normal = Bool
 
 type RegId = Int
 
-data App = APP Normal [Atom] | CASE Id [Atom] | PRIM RegId [Atom]
+data App = APP Normal [Atom]
+         | CASE Id [Atom]
+         | PRIM RegId [Atom]
   deriving (Show, Read)
 
 type LUT = Int
