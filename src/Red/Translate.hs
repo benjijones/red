@@ -1,6 +1,6 @@
 module Red.Translate where
 
-import qualified Red.FliteSyntax as Flite
+import qualified Flite.Syntax as Flite
 
 import CoreSyn (Alt, AltCon (..), Bind (..), CoreProgram, CoreBind, Expr (..))
 import Var (Var, Id, varName)

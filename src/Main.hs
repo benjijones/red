@@ -6,12 +6,13 @@ import GHC.Paths (libdir)
 import GhcMonad
 import DynFlags
 import CoreSyn
-
-import Red.Translate (translate)
-
 -- for printing
 import GHC.IO.Handle.FD (stdout)
 import Outputable (ppr, printForAsm)
+
+import Red.Translate (translate)
+
+import Flite.Pretty
 
 main :: IO ()
 main = do 

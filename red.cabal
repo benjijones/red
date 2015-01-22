@@ -18,9 +18,9 @@ cabal-version:       >=1.8
 executable red
   main-is:            Main.hs
   hs-source-dirs:     src
-  other-modules:      Red.Syntax,
-                      Red.Translate
+  other-modules:      Red.Translate
   build-depends:      base ==4.6.*,
                       ghc ==7.6.*,
                       ghc-paths ==0.1.0.9,
-                      transformers ==0.3.0.0
+                      transformers ==0.4.*,
+                      flite ==0.6.*
