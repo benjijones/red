@@ -26,5 +26,5 @@ coreModule fileName = do
     dflags <- getSessionDynFlags
     setSessionDynFlags dflags
     core <- compileToCoreModule fileName
---    liftIO . printForAsm dflags stdout . ppr $ cm_binds core
+    liftIO . printForAsm dflags stdout . ppr $ cm_binds core
     return core
