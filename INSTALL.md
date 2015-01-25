@@ -1,5 +1,5 @@
-To install, first create a cabal sandbox, then build the project:
+To install, configure then install:
 
-`cabal sandbox init`
+`cabal configure`
 
 `cabal install`
