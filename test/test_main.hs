@@ -1,5 +1,4 @@
-main = 
-    return $ a1
+main = return $ 1 + 2
 --  putStrLn "Hello, world!"
   
 a1 x = let y = 1

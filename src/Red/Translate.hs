@@ -21,18 +21,22 @@ translateBind (Rec exprs)     = undefined
 translateExpr :: Expr Var -> Flite.Exp
 translateExpr (Var id)        = Flite.Var . uniqueName $ id
 translateExpr (Lit lit)       = translateLit lit
+
+-- Ignore application if arg is a Type
+translateExpr (App func (Type _))  = translateExpr func
 translateExpr (App func arg)  = Flite.App (translateExpr func) [(translateExpr arg)]
-translateExpr (Lam id body)   = Flite.Lam [uniqueName $ id] $ translateExpr body
+
+translateExpr (Lam id body)   = Flite.Lam [uniqueName id] $ translateExpr body
+
 translateExpr (Let bind body) = let decl = translateBind bind
                                 in Flite.Let [(Flite.funcName decl, Flite.funcRhs decl)] $ translateExpr body
-translateExpr (Case expr id ty alts)
-                              = Flite.Case (translateExpr expr) (map translateAlt alts)
-translateExpr (Cast expr _coercion)
-                              = Flite.Var "unknown cast"
-translateExpr (Tick _id _expr) = Flite.Var "unknown tick"
-translateExpr (Type ty)    = translateType ty
-translateExpr (Coercion _coercion)
-                              = Flite.Var "unknown coercion"
+                                
+translateExpr (Case expr id ty alts) = Flite.Case (translateExpr expr) (map translateAlt alts)
+                              
+translateExpr (Cast expr _coercion) = Flite.Var "unknown cast"
+translateExpr (Tick _id _expr)      = Flite.Var "unknown tick"
+translateExpr (Type ty)             = translateType ty
+translateExpr (Coercion _coercion)  = Flite.Var "unknown coercion"
                               
 translateLit :: Literal -> Flite.Exp
 translateLit (LitInteger n _) = Flite.Int . fromInteger $ n
